@@ -73,7 +73,7 @@ jobs:
         shell: bash
         run: |
           cargo build --verbose --release
-          bin="target/${{ matrix.target }}/release-lto/rg"
+          bin="target/${{ matrix.target }}/release/my-gh-actions-test"
           echo "BIN=$bin" >> $GITHUB_ENV
 
       - name: Determine archive name
