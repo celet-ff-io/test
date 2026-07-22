@@ -24,6 +24,7 @@ jobs:
         shell: bash
         run: |
           tag="${{ github.ref_name }}"
+          echo "TAG=$tag" >> $GITHUB_ENV
           version="${tag#v}"
           echo "VERSION=$version" >> $GITHUB_ENV
       - name: Show the version
@@ -39,7 +40,7 @@ jobs:
       - name: Create GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release create $VERSION --draft --verify-tag --title $VERSION
+        run: gh release create $TAG --draft --verify-tag --title $VERSION
     outputs:
       version: ${{ env.VERSION }}
 
