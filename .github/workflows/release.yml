@@ -72,7 +72,6 @@ jobs:
       - name: Set target variables
         shell: bash
         run: |
-          mkdir -p "$ARCHIVE"/{complete,doc}
           echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
           echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
 
@@ -92,6 +91,7 @@ jobs:
       - name: Creating directory for archive
         shell: bash
         run: |
+          mkdir -p "$ARCHIVE"/{complete,doc}
           cp "$BIN" "$ARCHIVE"/
           cp {README.md,LICENSE} "$ARCHIVE"/
 
