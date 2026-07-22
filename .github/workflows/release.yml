@@ -69,10 +69,16 @@ jobs:
           toolchain: ${{ matrix.rust }}
           target: ${{ matrix.target }}
 
+      - name: Set target variables
+        shell: bash
+        run: |
+          echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
+          echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
+
       - name: Build release binary
         shell: bash
         run: |
-          cargo build --verbose --release
+          cargo build --verbose --release ${{ env.TARGET_FLAGS }}
           bin="target/${{ matrix.target }}/release/my-gh-actions-test"
           echo "BIN=$bin" >> $GITHUB_ENV
 
@@ -85,7 +91,6 @@ jobs:
       - name: Creating directory for archive
         shell: bash
         run: |
-          mkdir -p "$ARCHIVE"/{doc}
           cp "$BIN" "$ARCHIVE"/
           cp {README.md,LICENSE} "$ARCHIVE"/
 
